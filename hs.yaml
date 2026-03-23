@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1beta1","kind":"VirtualService","metadata":{"annotations":{},"labels":{"app":"hello-secrets"},"name":"hello-secrets","namespace":"services"},"spec":{"gateways":["gateways/wc-citilink-lt"],"hosts":["hello-secrets.test.citilink.lt"],"http":[{"match":[{"uri":{"prefix":"/"}}],"route":[{"destination":{"host":"hello-secrets","port":{"number":80}}}]}]}}
+  creationTimestamp: "2026-02-12T14:28:38Z"
+  generation: 1
+  labels:
+    app: httpbin
+  name: httpbin
+  namespace: services
+spec:
+  gateways:
+  - gateways/wc-citilink-lt
+  hosts:
+  - httpbin.test.citilink.lt
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: httpbin
+        port:
+          number: 8080

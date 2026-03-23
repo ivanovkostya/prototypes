@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: s3-proxy-wildcard
+  namespace: services
+spec:
+  hosts:
+  - "s3-proxy.services.svc.k8s.stage.citilink.lt"
+  - "*.s3-proxy.services.svc.k8s.stage.citilink.lt"
+  location: MESH_INTERNAL
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  resolution: NONE

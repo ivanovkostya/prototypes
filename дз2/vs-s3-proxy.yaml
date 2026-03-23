@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    meta.helm.sh/release-name: s3-proxy
+    meta.helm.sh/release-namespace: services
+  labels:
+    app: s3-proxy
+    app.kubernetes.io/managed-by: Helm
+  name: s3-proxy
+  namespace: services
+  resourceVersion: "2898917071"
+spec:
+  gateways:
+  - gateways/wc-s3-proxy-svc-citilink-lt
+  hosts:
+  - s3-proxy.svc.citilink.lt
+  - '*.s3-proxy.svc.citilink.lt'
+  http:
+  - match:
+    - port: 9999
+    route:
+    - destination:
+        host: s3-proxy
+        port:
+          number: 9999
+  - match:
+    - uri:
+        exact: /healthz
+    - uri:
+        exact: /healthy
+    - uri:
+        exact: /metrics
+    route:
+    - destination:
+        host: s3-proxy
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: s3-proxy
+        port:
+          number: 80
