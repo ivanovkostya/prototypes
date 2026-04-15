@@ -35,7 +35,7 @@ def get_current_user(credentials: HTTPBasicCredentials = Depends(security),
         raise HTTPException(status_code=401, detail="Неверные учетные данные")
     return user
 
-@app.post("/auth/register")
+@app.get("/auth/register")
 def register(username: str, password: str, db: Session = Depends(get_db)):
     if db.query(User).filter(User.username == username).first():
         raise HTTPException(status_code=400, detail="Пользователь уже существует")
@@ -44,7 +44,7 @@ def register(username: str, password: str, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "OK"}
 
-@app.post("/auth/login")
+@app.get("/auth/login")
 def login(credentials: HTTPBasicCredentials = Depends(HTTPBasic()), 
           db: Session = Depends(get_db)):
     user = authenticate_user(db, credentials.username, credentials.password)
@@ -52,7 +52,7 @@ def login(credentials: HTTPBasicCredentials = Depends(HTTPBasic()),
         raise HTTPException(status_code=401, detail="Ошибка")
     return {"message": "OK"}
 
-@app.post("/auth/logout")
+@app.get("/auth/logout")
 def logout():
     return {"message": "OK"}
 
