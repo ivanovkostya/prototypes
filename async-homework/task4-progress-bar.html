@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогресс-бар</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        .progress-container {
+            width: 400px;
+            height: 30px;
+            border: 1px solid black;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: green;
+            transition: width 1s;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Выполнение задачи</h2>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <div id="status">Загрузка...</div>
+
+    <script>
+
+        const progressBar = document.getElementById("progress-bar");
+        const status = document.getElementById("status");
+
+        let progress = 0;
+
+        // Каждую секунду увеличиваем прогресс
+        const interval = setInterval(() => {
+
+            progress += 20;
+
+            progressBar.style.width = progress + "%";
+
+            if (progress >= 100) {
+
+                clearInterval(interval);
+
+                status.textContent = "Готово!";
+
+            }
+
+        }, 1000);
+
+    </script>
+
+</body>
+</html>
